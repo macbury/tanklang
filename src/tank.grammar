@@ -1,0 +1,5 @@
+Tank {
+  Program = Block
+  Block = (Statement ";")+
+  Statement = "test"
+}
