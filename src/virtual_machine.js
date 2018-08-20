@@ -1,4 +1,5 @@
 import Opcodes from './opcodes'
+import { ConsoleIO } from './io'
 import { Frames } from './frame'
 import Stack from './stack'
 import { assert } from './errors'
@@ -10,15 +11,17 @@ export class VirtualMachine {
   _ip = 0
   stack = []
   program = []
+  context = {}
   halted = false
 
-  constructor(instructions, opcodes = Opcodes) {
+  constructor(instructions, opcodes = Opcodes, io = ConsoleIO) {
     this.program = instructions
     this.opcodes = opcodes
     this._ip = 0
     this.stack = new Stack()
     this.frames = new Frames()
-    this.frames.push(0) 
+    this.frames.push(0)
+    this.io = io
   }
 
   set ip(newIp) {

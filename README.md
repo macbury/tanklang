@@ -3,9 +3,9 @@
 ```
 # global variables
 
-let a : int;
-let b : int;
-let c : int;
+let a : number;
+let b : number = 3;
+let c = 13;
 
 b = 2;
 a = 2;

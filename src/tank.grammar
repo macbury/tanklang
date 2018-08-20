@@ -1,14 +1,16 @@
 Tank {
   Program   = Block
-  Block     = (Statement ";")+
-  Statement = "var" id ":" Type "=" value -- decl_assign
-            | "var" id ":" Type -- decl
+  Block     = (Statement "\n"*)+
+  Statement = "let" id ":" Type "=" value -- declAssign
+            | "let" id ":" Type -- decl
+            | "let" id "=" value -- declGuessType
 
   VarExp    = id
-  Type      = "int" | "bool" | "text"
+  Type      = "number" | "boolean" | "text"
 
   id        = ~keyword letter*
-  keyword   = ("var" | "int" | "bool" | "text")
+  keyword   = ("let" | "number" | "boolean" | "text")
   number    = digit+
-  value     = (number | id)
+  boolean   = ("true" | "false")
+  value     = (number | id | boolean)
 }
