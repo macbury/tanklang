@@ -6,7 +6,8 @@ describe('Compiler', function () {
 
   it('generate assign opcodes', function () {
     let compiler = new Compiler()
-    let bytecode = compiler.compile('let a : number = 3')
-    expect(bytecode).to.deep.eq([Opcode.Push, 3, Opcode.Store, 0, Opcode.Halt])
+    let ast = compiler.generateAst('let a : number = 3')
+    debugger
+    expect(ast).to.eq({})
   })
 })
