@@ -1,13 +1,13 @@
-import ohm from 'ohm-js'
+import Compiler from './compiler'
+import { VirtualMachine } from './virtual_machine'
 
-let grammar = ohm.grammar('MyGrammar { greeting = "Hello" | "Hola" }')
+let compiler = new Compiler()
+try {
+  let bytecode = compiler.compile('let a : nsumber = 3')
+  let vm = new VirtualMachine(bytecode)
+  vm.run()
+} catch (e) {
+  console.error(e)
+  debugger
+}
 
-let sem = grammar.createSemantics().addOperation('ast', {
-  greeting: (a) => {
-    debugger
-    return a
-  }
-})
-
-let match = grammar.match('Hello')
-sem(match).ast()
