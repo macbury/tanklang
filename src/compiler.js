@@ -1,5 +1,6 @@
 import ohm from 'ohm-js'
 import { readFileSync } from 'fs'
+import { generateAst } from './ast'
 
 class CompilationError extends Error {
   constructor(match) {
@@ -13,10 +14,10 @@ export default class Compiler {
     this.grammarSrc = readFileSync('./src/tank.ohm')
     this.grammar = ohm.grammar(this.grammarSrc)
     this.semantic = this.grammar.createSemantics()
-    this.createSemantics()
+    this.semantic.addOperation('toAst', generateAst)
   }
 
-  compile(src) {
+  generateAst(src) {
     let match = this.grammar.match(src)
     if (match.succeeded()) {
       return this.semantic(match).toAst()
@@ -25,11 +26,11 @@ export default class Compiler {
     }
   }
 
-  createSemantics() {
-    this.semantic.addOperation('toAst', {
-      Program: (e) => {
-        return 'test'
-      }
-    })
+  compile(src) {
+    let bytecode = []
+    let ast = this.generateAst(src)
+    ast.analyze()
+    ast.compile(bytecode)
+    return bytecode
   }
 }
