@@ -3,7 +3,6 @@ import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
 import { BinaryExpression } from './expressions'
 
-
 export const generateAst = {
   Program: (block) => {
     return new Program(block.toAst())
