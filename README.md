@@ -15,4 +15,6 @@ c = a + b;
 print(c);
 ```
 
-# https://github.com/harc/ohm/blob/master/doc/syntax-reference.md
+# Reference
+
+https://github.com/harc/ohm/blob/master/doc/syntax-reference.md
