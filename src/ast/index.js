@@ -17,8 +17,8 @@ class BinaryExpression extends Base {
 
   compile(bytecode) {
     if (this.operator == '+') {
-      this.right.compile()
-      this.left.compile()
+      this.right.compile(bytecode)
+      this.left.compile(bytecode)
       bytecode.push('Add')
     }
   }
@@ -41,8 +41,8 @@ export const generateAst = {
     return new VarExp(id.sourceString)
   },
 
-  Exp_binary: (left, operator, right) => {
-    return new BinaryExpression(left.toAst(), operator.sourceString, right.toAst())
+  Exp_binary: (leftExpression, operator, rightExpression) => {
+    return new BinaryExpression(leftExpression.toAst(), operator.sourceString, rightExpression.toAst())
   },
 
   Statement_decl: (_let, varExp, _sep, type) => {

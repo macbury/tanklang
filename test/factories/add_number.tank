@@ -1,4 +1,1 @@
-let a : number = 6
-let b : number = 8
-
-let c : number = a + b
+let c : number = 6 + 8

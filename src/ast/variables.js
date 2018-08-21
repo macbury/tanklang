@@ -30,7 +30,7 @@ export class AssignVariable extends Base {
   analyze(context) {
     this.varExp.analyze(context)
     this.value.analyze(context)
-    this.varExp.validateType(this.value)
+    //this.varExp.validateType(this.value)// how to gues value from expression?
   }
 
   compile(bytecode) {
@@ -54,7 +54,7 @@ export class VarExp extends Base {
 
   validateType(value) {
     if (this.type != value.type) {
-      throw `${this.name} is type of ${this.type} but you want assign ${value.type}`
+      throw new Error(`${this.name} is type of ${this.type} but you want assign ${value.type}`)
     }
   }
 

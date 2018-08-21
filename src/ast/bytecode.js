@@ -1,3 +1,5 @@
+import Opcodes from '../opcodes'
+
 export default class Bytecode {
   program = []
 
@@ -19,5 +21,19 @@ export default class Bytecode {
 
   toBlob() {
     throw "Implement generation of blob"
+  }
+
+  toProgram() {
+    let code = []
+    for (var i = 0; i < this.program.length; i++) {
+      let { opcode, operands } = this.program[i]
+      code.push(Opcodes[opcode])
+      if (operands != null) {
+        for (var j = 0; j < operands.length; j++) {
+          code.push(operands[j])
+        }
+      }
+    }
+    return code
   }
 }
