@@ -4,30 +4,6 @@ class Variable {
     this.type = type
     this.id = id
   }
-
-  cast(value) {
-    if (this.type == 'number') {
-      return parseInt(value)
-    } else if (this.type == 'boolean') {
-      return value == 'true' ? 1 : 0
-    } else if (this.type == 'string') {
-      return value.toString()
-    } else {
-      throw `Undefined ${this.type} for ${value}`
-    }
-  }
-
-  defaultValue() {
-    if (this.type == 'number') {
-      return 0
-    } else if (this.type == 'boolean') {
-      return 0
-    } else if (this.type == 'string') {
-      return ''
-    } else {
-      throw `Undefined ${this.type} for defaultValie`
-    }
-  }
 }
 
 export default class Context {

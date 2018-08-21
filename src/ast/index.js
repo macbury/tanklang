@@ -1,97 +1,26 @@
-class Base {
-  analyze(context) {
-    // first step, prepare variables, loops etc...
-  }
+import { Number, Boolean, Type } from './values'
+import { DeclareVariable, AssignVariable, VarExp } from './variables'
+import { Program, Block, Joiner, Base } from './base'
 
-  compile(bytecode) {
-    // second step done after analyze is complete
-    // generete here bytecode
-  }
-}
-
-class Program extends Base {
-  constructor(block) {
+class BinaryExpression extends Base {
+  constructor(left, operator, right) {
     super()
-    this.block = block
-  }
-
-  compile(bytecode) {
-    this.block.compile(bytecode)
-    bytecode.push('Halt')
+    this.left = left
+    this.right = right
+    this.operator = operator
   }
 
   analyze(context) {
-    this.block.analyze(context)
-  }
-}
-
-class Block extends Base {
-  constructor(statements) {
-    super()
-    this.statements = statements
-  }
-
-  analyze(context) {
-    this.statements.forEach((statement) => statement.analyze(context))
+    this.left.analyze(context)
+    this.right.analyze(context)
   }
 
   compile(bytecode) {
-    this.statements.forEach((statement) => statement.compile(bytecode))
-  }
-}
-
-/**
-* Join multiple nodes into one
-*/
-class Joiner extends Base {
-  constructor(...nodes) {
-    super()
-    this.nodes = nodes
-  }
-
-  analyze(context) {
-    this.nodes.forEach((node) => node.analyze(context))
-  }
-
-  compile(bytecode) {
-    this.nodes.forEach((node) => node.compile(bytecode))
-  }
-}
-
-class DeclareVariable extends Base {
-  constructor(name, type) {
-    super()
-    this.name = name
-    this.type = type
-  }
-
-  analyze(context) {
-    context.variableMustNotBeAlreadyDeclared(this.name)
-    context.addVariable(this.name, this.type)
-    this.variable = context.lookupVariable(this.name)
-  }
-
-  compile(bytecode) {
-    bytecode.push('Push', this.variable.defaultValue())
-    bytecode.push('Store', this.variable.id)
-  }
-}
-
-class AssignVariable extends Base {
-  constructor(name, value) {
-    super()
-    this.name = name
-    this.value = value
-  }
-
-  analyze(context) {
-    context.variableMustBeDeclared(this.name)
-    this.variable = context.lookupVariable(this.name)
-  }
-
-  compile(bytecode) {
-    bytecode.push('Push', this.variable.cast(this.value))
-    bytecode.push('Store', this.variable.id)
+    if (this.operator == '+') {
+      this.right.compile()
+      this.left.compile()
+      bytecode.push('Add')
+    }
   }
 }
 
@@ -104,19 +33,36 @@ export const generateAst = {
     return new Block(statements.toAst())
   },
 
-  Statement_decl: (_let, varExp, _sep, type) => {
-    return new DeclareVariable(varExp.sourceString, type.sourceString)
+  Type: (type) => {
+    return Type.for(type.sourceString)
   },
 
-  Statement_Assign: (varExp, _assigment, exp) => {
-    return new AssignVariable(varExp.sourceString, 11)
+  VarExp: (id) => {
+    return new VarExp(id.sourceString)
+  },
+
+  Exp_binary: (left, operator, right) => {
+    return new BinaryExpression(left.toAst(), operator.sourceString, right.toAst())
+  },
+
+  Statement_decl: (_let, varExp, _sep, type) => {
+    return new DeclareVariable(varExp.toAst(), type.toAst())
   },
 
   Statement_declAssign: (_let, varExp, _sep, type, _assigment, value) => {
+    let ve = varExp.toAst()
     return new Joiner(
-      new DeclareVariable(varExp.sourceString, type.sourceString),
-      new AssignVariable(varExp.sourceString, value.sourceString)
+      new DeclareVariable(ve, type.toAst()),
+      new AssignVariable(ve, value.toAst())
     )
   },
+
+  number: (number) => {
+    return new Number(number.sourceString)
+  },
+
+  boolean: (boolean) => {
+    return new Boolean(boolean.sourceString)
+  }
 }
 

@@ -17,6 +17,6 @@ Tank {
   keyword   = ("let" | "number" | "boolean" | "text")
   number    = digit+
   boolean   = ("true" | "false")
-  value     = (number | id | boolean)
+  value     = (number | boolean | id)
   addop     =  "+" | "-"
 }
