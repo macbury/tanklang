@@ -5,7 +5,7 @@ import { readFileSync } from 'fs'
 
 describe('Compiler', function () {
 
-  describe('reassign', function() {
+  describe('assign multiple variables', function() {
     it('generate bytecode', function () {
       let compiler = new Compiler()
       let bytecode = compiler.compile(readFileSync('./test/factories/multiassign.tank'))
