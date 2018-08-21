@@ -10,6 +10,10 @@ class Value extends Base {
   get() {
     return this.content
   }
+
+  compile(bytecode) {
+    bytecode.push('Push', this.content)
+  }
 }
 
 export class Number extends Value {

@@ -34,7 +34,7 @@ export class AssignVariable extends Base {
   }
 
   compile(bytecode) {
-    bytecode.push('Push', this.value.get())
+    this.value.compile(bytecode)
     bytecode.push('Store', this.varExp.id)
   }
 }
@@ -54,7 +54,6 @@ export class VarExp extends Base {
 
   validateType(value) {
     if (this.type != value.type) {
-      debugger
       throw `${this.name} is type of ${this.type} but you want assign ${value.type}`
     }
   }
