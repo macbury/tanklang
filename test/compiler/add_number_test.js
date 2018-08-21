@@ -30,6 +30,7 @@ describe('Compiler', function () {
       vm.run()
 
       expect(vm.frame.get(1)).to.deep.eq(14)
+      expect(vm.stack.toArray()).to.be.empty
     })
   })
 })
