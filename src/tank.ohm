@@ -1,9 +1,14 @@
 Tank {
   Program   = Block
   Block     = (Statement "\n"*)+
-  Statement = "let" VarExp ":" Type "=" value -- declAssign
+  Statement = "let" VarExp ":" Type "=" Exp -- declAssign
             | "let" VarExp ":" Type -- decl
             | "let" VarExp "=" value -- declGuessType
+            | VarExp "=" Exp -- Assign
+
+  Exp       = Exp addop Exp1 --binary
+            | Exp1
+  Exp1      = value
 
   VarExp    = id
   Type      = "number" | "boolean" | "text"
@@ -13,4 +18,5 @@ Tank {
   number    = digit+
   boolean   = ("true" | "false")
   value     = (number | id | boolean)
+  addop     =  "+" | "-"
 }

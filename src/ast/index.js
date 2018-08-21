@@ -1,5 +1,3 @@
-import Opcodes from '../opcodes'
-
 class Base {
   analyze(context) {
     // first step, prepare variables, loops etc...
@@ -19,7 +17,7 @@ class Program extends Base {
 
   compile(bytecode) {
     this.block.compile(bytecode)
-    bytecode.push(Opcodes.Halt)
+    bytecode.push('Halt')
   }
 
   analyze(context) {
@@ -74,8 +72,8 @@ class DeclareVariable extends Base {
   }
 
   compile(bytecode) {
-    bytecode.push(Opcodes.Push, this.variable.defaultValue())
-    bytecode.push(Opcodes.Store, this.variable.id)
+    bytecode.push('Push', this.variable.defaultValue())
+    bytecode.push('Store', this.variable.id)
   }
 }
 
@@ -92,8 +90,8 @@ class AssignVariable extends Base {
   }
 
   compile(bytecode) {
-    bytecode.push(Opcodes.Push, this.variable.cast(this.value))
-    bytecode.push(Opcodes.Store, this.variable.id)
+    bytecode.push('Push', this.variable.cast(this.value))
+    bytecode.push('Store', this.variable.id)
   }
 }
 
@@ -108,6 +106,10 @@ export const generateAst = {
 
   Statement_decl: (_let, varExp, _sep, type) => {
     return new DeclareVariable(varExp.sourceString, type.sourceString)
+  },
+
+  Statement_Assign: (varExp, _assigment, exp) => {
+    return new AssignVariable(varExp.sourceString, 11)
   },
 
   Statement_declAssign: (_let, varExp, _sep, type, _assigment, value) => {
