@@ -17,7 +17,7 @@ export function compile(path, callback) {
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
     vm.run()
-    callback(vm, bytecode)
+    callback(vm, bytecode.toArray())
     done()
   }
 }

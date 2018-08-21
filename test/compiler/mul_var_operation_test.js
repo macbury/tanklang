@@ -3,7 +3,7 @@ import { compile } from '../helpers'
 
 describe('Compiler', function () {
   it('sub variable', compile('./test/factories/multi_var_operation.tank', function(vm, bytecode) {
-    expect(bytecode.toArray()).to.deep.eq([
+    expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize someVal
       { opcode: 'Store', operands: [1] }, 
 
