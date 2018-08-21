@@ -16,6 +16,18 @@ class Variable {
       throw `Undefined ${this.type} for ${value}`
     }
   }
+
+  defaultValue() {
+    if (this.type == 'number') {
+      return 0
+    } else if (this.type == 'boolean') {
+      return 0
+    } else if (this.type == 'string') {
+      return ''
+    } else {
+      throw `Undefined ${this.type} for defaultValie`
+    }
+  }
 }
 
 export default class Context {
@@ -23,6 +35,15 @@ export default class Context {
     this.parent = parent
     this.symbolTable = Object.create(null)
     this.uuid = 0
+  }
+
+  nextUUID() {
+    if (this.parent == null) {
+      this.uuid++
+      return this.uuid
+    } else {
+      return this.parent.nextUUID()
+    }
   }
 
   createChildContext() {
@@ -42,8 +63,7 @@ export default class Context {
   }
 
   addVariable(name, type) {
-    this.uuid++
-    this.symbolTable[name] = new Variable(name, type, this.uuid)
+    this.symbolTable[name] = new Variable(name, type, this.nextUUID())
     return this.symbolTable[name]
   }
 

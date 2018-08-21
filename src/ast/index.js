@@ -70,6 +70,12 @@ class DeclareVariable extends Base {
   analyze(context) {
     context.variableMustNotBeAlreadyDeclared(this.name)
     context.addVariable(this.name, this.type)
+    this.variable = context.lookupVariable(this.name)
+  }
+
+  compile(bytecode) {
+    bytecode.push(Opcodes.Push, this.variable.defaultValue())
+    bytecode.push(Opcodes.Store, this.variable.id)
   }
 }
 

@@ -3,15 +3,18 @@ import { UndefinedVariable, MissingCall, CallStackOverflow } from './errors'
 export class Frame {
   variables = {}
 
-  constructor(returnAddress) {
+  constructor(returnAddress, globalFrame) {
     this.returnAddress = returnAddress
+    this.globalFrame = globalFrame
   }
 
   get(varNumber) {
-    if (this.variables[varNumber] == null) {
-      throw new UndefinedVariable()
+    if (this.variables[varNumber] != null) {
+      return this.variables[varNumber]
+    } else if (this.globalFrame != null) {
+      return this.globalFrame.get(varNumber)
     }
-    return this.variables[varNumber]
+    throw new UndefinedVariable()
   }
 
   set(varNumber, value) {
@@ -23,6 +26,11 @@ const MAX_STACK_SIZE = 200
 
 export class Frames {
   stack = []
+
+  constructor() {
+    this.global = new Frame(0)
+    this.stack.push(this.global)
+  }
 
   get current() {
     return this.stack[this.length - 1]
@@ -36,7 +44,7 @@ export class Frames {
     if (this.length + 1 >= MAX_STACK_SIZE) {
       throw new CallStackOverflow()
     }
-    this.stack.push(new Frame(returnAddress))
+    this.stack.push(new Frame(returnAddress, this.global))
   }
 
   pop() {

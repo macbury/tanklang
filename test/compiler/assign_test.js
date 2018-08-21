@@ -10,8 +10,14 @@ describe('Compiler', function () {
       let compiler = new Compiler()
       let bytecode = compiler.compile(readFileSync('./test/factories/multiassign.tank'))
       expect(bytecode).to.deep.eq([
-        Opcode.Push, 77, 
+        Opcode.Push, 0, 
         Opcode.Store, 1, 
+        Opcode.Push, 77, 
+        Opcode.Store, 1,
+        Opcode.Push, 0, 
+        Opcode.Store, 2, 
+        Opcode.Push, 0, 
+        Opcode.Store, 3, 
         Opcode.Push, 1, 
         Opcode.Store, 3, 
         Opcode.Halt
@@ -24,6 +30,8 @@ describe('Compiler', function () {
       let compiler = new Compiler()
       let bytecode = compiler.compile('let a : number = 3')
       expect(bytecode).to.deep.eq([
+        Opcode.Push, 0, 
+        Opcode.Store, 1, 
         Opcode.Push, 3, 
         Opcode.Store, 1, 
         Opcode.Halt

@@ -20,7 +20,6 @@ export class VirtualMachine {
     this._ip = 0
     this.stack = new Stack()
     this.frames = new Frames()
-    this.frames.push(0)
     this.io = io
   }
 
