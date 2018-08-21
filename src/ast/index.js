@@ -1,4 +1,5 @@
 import Opcodes from '../opcodes'
+
 class Base {
   analyze(context) {
     // first step, prepare variables, loops etc...
@@ -20,12 +21,20 @@ class Program extends Base {
     this.block.compile(bytecode)
     bytecode.push(Opcodes.Halt)
   }
+
+  analyze(context) {
+    this.block.analyze(context)
+  }
 }
 
 class Block extends Base {
   constructor(statements) {
     super()
     this.statements = statements
+  }
+
+  analyze(context) {
+    this.statements.forEach((statement) => statement.analyze(context))
   }
 
   compile(bytecode) {
@@ -42,8 +51,8 @@ class Joiner extends Base {
     this.nodes = nodes
   }
 
-  analyze() {
-    this.nodes.forEach((node) => node.analyze())
+  analyze(context) {
+    this.nodes.forEach((node) => node.analyze(context))
   }
 
   compile(bytecode) {
@@ -57,6 +66,11 @@ class DeclareVariable extends Base {
     this.name = name
     this.type = type
   }
+
+  analyze(context) {
+    context.variableMustNotBeAlreadyDeclared(this.name)
+    context.addVariable(this.name, this.type)
+  }
 }
 
 class AssignVariable extends Base {
@@ -66,9 +80,14 @@ class AssignVariable extends Base {
     this.value = value
   }
 
+  analyze(context) {
+    context.variableMustBeDeclared(this.name)
+    this.variable = context.lookupVariable(this.name)
+  }
+
   compile(bytecode) {
-    bytecode.push(Opcodes.Push, this.value)
-    bytecode.push(Opcodes.Store, 0)
+    bytecode.push(Opcodes.Push, this.variable.cast(this.value))
+    bytecode.push(Opcodes.Store, this.variable.id)
   }
 }
 
@@ -81,11 +100,15 @@ export const generateAst = {
     return new Block(statements.toAst())
   },
 
-  Statement_declAssign: (_let, id, _sep, type, _assigment, value) => {
+  Statement_decl: (_let, varExp, _sep, type) => {
+    return new DeclareVariable(varExp.sourceString, type.sourceString)
+  },
+
+  Statement_declAssign: (_let, varExp, _sep, type, _assigment, value) => {
     return new Joiner(
-      new DeclareVariable(id.sourceString, type.sourceString),
-      new AssignVariable(id.sourceString, value.sourceString)
+      new DeclareVariable(varExp.sourceString, type.sourceString),
+      new AssignVariable(varExp.sourceString, value.sourceString)
     )
-  }
+  },
 }
 

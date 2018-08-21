@@ -1,9 +1,9 @@
 Tank {
   Program   = Block
   Block     = (Statement "\n"*)+
-  Statement = "let" id ":" Type "=" value -- declAssign
-            | "let" id ":" Type -- decl
-            | "let" id "=" value -- declGuessType
+  Statement = "let" VarExp ":" Type "=" value -- declAssign
+            | "let" VarExp ":" Type -- decl
+            | "let" VarExp "=" value -- declGuessType
 
   VarExp    = id
   Type      = "number" | "boolean" | "text"

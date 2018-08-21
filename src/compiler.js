@@ -1,6 +1,7 @@
 import ohm from 'ohm-js'
 import { readFileSync } from 'fs'
 import { generateAst } from './ast'
+import Context from './ast/context'
 
 class CompilationError extends Error {
   constructor(match) {
@@ -29,7 +30,7 @@ export default class Compiler {
   compile(src) {
     let bytecode = []
     let ast = this.generateAst(src)
-    ast.analyze()
+    ast.analyze(new Context(null))
     ast.compile(bytecode)
     return bytecode
   }
