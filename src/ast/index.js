@@ -16,11 +16,19 @@ class BinaryExpression extends Base {
   }
 
   compile(bytecode) {
+    this.left.compile(bytecode)
+    this.right.compile(bytecode)
+
     if (this.operator == '+') {
-      this.right.compile(bytecode)
-      this.left.compile(bytecode)
       bytecode.push('Add')
+      return
     }
+
+    if (this.operator == '-') {
+      bytecode.push('Sub')
+      return
+    }
+    throw new Error(`Unsuported operator: ${this.operator}`)
   }
 }
 
