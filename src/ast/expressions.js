@@ -39,6 +39,16 @@ export class LogicExpression extends Expression {
 
 export class CompareExpression extends Expression {
 
+  compile(bytecode) {
+    super.compile(bytecode)
+
+    if (this.operator == '==') {
+      bytecode.push('IsEq')
+      return
+    }
+
+    throw new Error(`Unsuported operator: ${this.operator}`)
+  }
 }
 
 export class UnaryExpression extends Base {
