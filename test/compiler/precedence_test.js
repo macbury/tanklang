@@ -1,8 +1,8 @@
 import { expect } from 'chai'
-import { compile } from '../helpers'
+import { loadAndcompile } from '../helpers'
 
 describe('Compiler', function () {
-  it('operator precedence', compile('./test/factories/precedence.tank', function(vm, bytecode) {
+  it('operator precedence', loadAndcompile('./test/factories/precedence.tank', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(-2)
     
     expect(bytecode).to.deep.eq([

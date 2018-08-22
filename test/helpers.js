@@ -10,10 +10,22 @@ export function withVM(instructions, callback) {
   }
 }
 
-export function compile(path, callback) {
+export function loadAndcompile(path, callback) {
   return function(done) {
     let compiler = new Compiler()
     let bytecode = compiler.compile(readFileSync(path))
+    let program = bytecode.toProgram()
+    let vm = new VirtualMachine(program)
+    vm.run()
+    callback(vm, bytecode.toArray())
+    done()
+  }
+}
+
+export function compile(content, callback) {
+  return function(done) {
+    let compiler = new Compiler()
+    let bytecode = compiler.compile(content)
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
     vm.run()
