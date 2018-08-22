@@ -19,3 +19,5 @@ print(c);
 
 https://github.com/harc/ohm/blob/master/doc/syntax-reference.md
 https://ohmlang.github.io/editor/
+https://ruslanspivak.com/lsbasi-part7/
+https://www.pubnub.com/blog/2016-09-08-build-your-own-symbol-calculator-with-ohm/
