@@ -47,6 +47,28 @@ export class CompareExpression extends Expression {
       return
     }
 
+    if (this.operator == '!=') {
+      bytecode.push('IsEq')
+      bytecode.push('Not')
+      return
+    }
+
+    if (this.operator == '>=') {
+      bytecode.push('IsGte')
+      return
+    }
+
+    if (this.operator == '>') {
+      bytecode.push('IsGt')
+      return
+    }
+
+    if (this.operator == '<' || this.operator == '<=') {
+      bytecode.push('IsGt')
+      bytecode.push('Not')
+      return
+    }
+
     throw new Error(`Unsuported operator: ${this.operator}`)
   }
 }
