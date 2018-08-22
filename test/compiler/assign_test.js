@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Compiler from '../../src/compiler'
 import { readFileSync } from 'fs'
 
-describe('Compiler', function () {
+describe('Assign', function () {
 
   describe('assign multiple variables', function() {
     it('generate bytecode', function () {
