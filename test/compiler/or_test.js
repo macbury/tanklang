@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { compile } from '../helpers'
 
-describe('Logic', function () {
+describe('Or', function () {
   it('false or true', compile('let trueOrFalse : boolean = false or true', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     
