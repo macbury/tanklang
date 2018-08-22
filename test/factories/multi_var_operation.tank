@@ -1,2 +1,2 @@
-let someVal : number = 13
-let result : number = someVal - 20
+let someVal : number = 13;
+let result : number = someVal - 20;

@@ -1,10 +1,12 @@
 Tank {
   Program   = Block
-  Block     = (Statement "\n"*)+
-  Statement = "let" VarExp ":" Type "=" Exp -- declAssign
-            | "let" VarExp ":" Type -- decl
-            | "let" VarExp "=" value -- declGuessType
-            | VarExp "=" Exp -- Assign
+  Block     = (Statement)*
+  CurlBlock = "{" Block "}"
+  Statement = "let" VarExp ":" Type "=" Exp br -- declAssign
+            | "let" VarExp ":" Type br -- decl
+            | "let" VarExp "=" value br -- declGuessType
+            | VarExp "=" Exp br-- Assign
+            | "if" "(" Exp ")" CurlBlock --if
 
   Exp       =  Exp "or" Exp1 -- or
             |  Exp1
@@ -27,7 +29,7 @@ Tank {
   Type      = "number" | "boolean" | "text"
 
   id        = ~keyword letter*
-  keyword   = ("let" | "number" | "boolean" | "text")
+  keyword   = ("let" | "number" | "boolean" | "text" | "if" | "else")
   number    = digit+
   boolean   = ("true" | "false")
   value     = (number | boolean | id)
@@ -35,4 +37,5 @@ Tank {
   addop     =  "+" | "-"
   mulop     =  "*" | "/"
   prefixop  =  "-" | "not"
+  br        = ";"
 }

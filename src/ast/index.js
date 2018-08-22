@@ -8,7 +8,7 @@ export const generateAst = {
     return new Program(block.toAst())
   },
 
-  Block: (statements, _newLine) => {
+  Block: (statements) => {
     return new Block(statements.toAst())
   },
 
@@ -48,11 +48,11 @@ export const generateAst = {
     return expression.toAst()
   },
 
-  Statement_decl: (_let, varExp, _sep, type) => {
+  Statement_decl: (_let, varExp, _sep, type, _br) => {
     return new DeclareVariable(varExp.toAst(), type.toAst())
   },
 
-  Statement_declAssign: (_let, varExp, _sep, type, _assigment, value) => {
+  Statement_declAssign: (_let, varExp, _sep, type, _assigment, value, _br) => {
     let ve = varExp.toAst()
     return new Joiner(
       new DeclareVariable(ve, type.toAst()),

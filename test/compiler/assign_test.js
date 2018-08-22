@@ -27,7 +27,7 @@ describe('Assign', function () {
   describe('let a : number = 3', function() {
     it('generate bytecode', function () {
       let compiler = new Compiler()
-      let bytecode = compiler.compile('let a : number = 3')
+      let bytecode = compiler.compile('let a : number = 3;')
       expect(bytecode.toArray()).to.deep.eq([
         { opcode: 'Push', operands: [0] },
         { opcode: 'Store', operands: [1] },

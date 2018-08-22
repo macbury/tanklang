@@ -1,1 +1,1 @@
-let testing : number = 3 - 5
+let testing : number = 3 - 5;

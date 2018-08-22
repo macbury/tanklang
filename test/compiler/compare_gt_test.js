@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { compile, loadAndcompile } from '../helpers'
 
 describe('>', function () {
-  it('2 > 1', compile('let gte : boolean = 2 > 1', function(vm, bytecode) {
+  it('2 > 1', compile('let gte : boolean = 2 > 1;', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     
     expect(bytecode).to.deep.eq([
@@ -18,15 +18,15 @@ describe('>', function () {
     ])
   }))
 
-  it('0 > 10', compile('let gte : boolean = 0 > 10', function(vm, bytecode) {
+  it('0 > 10', compile('let gte : boolean = 0 > 10;', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.gte(0)
   }))
 
-  it('1 > 1', compile('let gte : boolean = 1 > 1', function(vm, bytecode) {
+  it('1 > 1', compile('let gte : boolean = 1 > 1;', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.gte(0)
   }))
 
-  it('0 > -1', compile('let gte : boolean = 0 > -1', function(vm, bytecode) {
+  it('0 > -1', compile('let gte : boolean = 0 > -1;', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.gte(1)
   }))
 })
