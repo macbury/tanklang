@@ -1,6 +1,6 @@
 import { Base } from './base'
 
-export class MathExpression extends Base {
+class Expression extends Base {
   constructor(left, operator, right) {
     super()
     this.left = left
@@ -16,6 +16,12 @@ export class MathExpression extends Base {
   compile(bytecode) {
     this.left.compile(bytecode)
     this.right.compile(bytecode)
+  }
+}
+
+export class AddOpExpression extends Expression {
+  compile(bytecode) {
+    super.compile(bytecode)
 
     if (this.operator == '+') {
       bytecode.push('Add')
@@ -26,6 +32,14 @@ export class MathExpression extends Base {
       bytecode.push('Sub')
       return
     }
+
+    throw new Error(`Unsuported operator: ${this.operator}`)
+  }
+}
+
+export class MulOpExpression extends Expression {
+  compile(bytecode) {
+    super.compile(bytecode)
 
     if (this.operator == '*') {
       bytecode.push('Mul')

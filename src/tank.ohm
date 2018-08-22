@@ -6,9 +6,9 @@ Tank {
             | "let" VarExp "=" value -- declGuessType
             | VarExp "=" Exp -- Assign
 
-  Exp       = Exp addop Exp1 --binary
+  Exp       = Exp addop Exp1 --add
             | Exp1
-  Exp1      = Exp1 mulop OtherExp --binary
+  Exp1      = Exp1 mulop OtherExp --mul
             | OtherExp
   OtherExp  = number | boolean | VarExp
 
