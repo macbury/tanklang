@@ -25,4 +25,8 @@ describe('>', function () {
   it('1 > 1', compile('let gte : boolean = 1 > 1', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.gte(0)
   }))
+
+  it('0 > -1', compile('let gte : boolean = 0 > -1', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.deep.gte(1)
+  }))
 })

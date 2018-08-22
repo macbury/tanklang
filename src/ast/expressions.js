@@ -74,7 +74,30 @@ export class CompareExpression extends Expression {
 }
 
 export class UnaryExpression extends Base {
-  
+  constructor(expression, operator) {
+    super()
+    this.expression = expression
+    this.operator = operator
+  }
+
+  analyze(context) {
+    this.expression.analyze(context)
+  }
+
+  compile(bytecode) {
+    this.expression.compile(bytecode)
+    if (this.operator == 'not') {
+      bytecode.push('Not')
+      return
+    }
+
+    if (this.operator == '-') {
+      bytecode.push('Push', -1)
+      bytecode.push('Mul')
+      return
+    }
+    throw new Error(`Unsuported operator: ${this.operator}`) 
+  }
 }
 
 export class AddOpExpression extends Expression {

@@ -40,8 +40,8 @@ export const generateAst = {
     return new MulOpExpression(leftExpression.toAst(), operator.toAst(), rightExpression.toAst())
   },
 
-  Exp5_unary: (expression, operator) => {
-    return new UnaryExpression(operator.toAst(), expression.toAst())
+  Exp5_unary: (operator, expression) => {
+    return new UnaryExpression(expression.toAst(), operator.toAst())
   },
 
   OtherExp_parens: (_left, expression, _right) => {
