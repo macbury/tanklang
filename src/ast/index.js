@@ -1,7 +1,7 @@
 import { Number, Boolean, Type } from './values'
 import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
-import { BinaryExpression } from './expressions'
+import { MathExpression } from './expressions'
 
 export const generateAst = {
   Program: (block) => {
@@ -21,7 +21,11 @@ export const generateAst = {
   },
 
   Exp_binary: (leftExpression, operator, rightExpression) => {
-    return new BinaryExpression(leftExpression.toAst(), operator.sourceString, rightExpression.toAst())
+    return new MathExpression(leftExpression.toAst(), operator.sourceString, rightExpression.toAst())
+  },
+
+  Exp1_binary: (leftExpression, operator, rightExpression) => {
+    return new MathExpression(leftExpression.toAst(), operator.sourceString, rightExpression.toAst())
   },
 
   Statement_decl: (_let, varExp, _sep, type) => {

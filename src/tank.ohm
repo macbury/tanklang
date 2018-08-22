@@ -8,7 +8,9 @@ Tank {
 
   Exp       = Exp addop Exp1 --binary
             | Exp1
-  Exp1      = number | boolean | VarExp
+  Exp1      = Exp1 mulop OtherExp --binary
+            | OtherExp
+  OtherExp  = number | boolean | VarExp
 
   VarExp    = id
   Type      = "number" | "boolean" | "text"
@@ -19,4 +21,5 @@ Tank {
   boolean   = ("true" | "false")
   value     = (number | boolean | id)
   addop     =  "+" | "-"
+  mulop     =  "*" | "/"
 }

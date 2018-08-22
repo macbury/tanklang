@@ -1,5 +1,6 @@
 import { Base } from './base'
-export class BinaryExpression extends Base {
+
+export class MathExpression extends Base {
   constructor(left, operator, right) {
     super()
     this.left = left
@@ -25,6 +26,17 @@ export class BinaryExpression extends Base {
       bytecode.push('Sub')
       return
     }
+
+    if (this.operator == '*') {
+      bytecode.push('Mul')
+      return
+    }
+
+    if (this.operator == '/') {
+      bytecode.push('Div')
+      return
+    }
+
     throw new Error(`Unsuported operator: ${this.operator}`)
   }
 }
