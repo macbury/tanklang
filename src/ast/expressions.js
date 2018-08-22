@@ -20,7 +20,21 @@ class Expression extends Base {
 }
 
 export class LogicExpression extends Expression {
+  compile(bytecode) {
+    super.compile(bytecode)
 
+    if (this.operator == 'or') {
+      bytecode.push('Or')
+      return
+    }
+
+    if (this.operator == 'and') {
+      bytecode.push('And')
+      return
+    }
+
+    throw new Error(`Unsuported operator: ${this.operator}`)
+  }
 }
 
 export class CompareExpression extends Expression {
