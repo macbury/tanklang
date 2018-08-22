@@ -2,6 +2,7 @@ import { Number, Boolean, Type } from './values'
 import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
+import { IfStatement } from './logic'
 
 export const generateAst = {
   Program: (block) => {
@@ -10,6 +11,10 @@ export const generateAst = {
 
   Block: (statements) => {
     return new Block(statements.toAst())
+  },
+
+  CurlBlock: (_lcurl, block, _rcurl) => {
+    return block.toAst()
   },
 
   Type: (type) => {
@@ -58,6 +63,14 @@ export const generateAst = {
       new DeclareVariable(ve, type.toAst()),
       new AssignVariable(ve, value.toAst())
     )
+  },
+
+  Statement_Assign: (varExp, _assign, exp, _br) => {
+    return new AssignVariable(varExp.toAst(), exp.toAst())
+  },
+
+  Statement_if: (_if, _lparen, expression, _rparen, block) => {
+    return new IfStatement(expression.toAst(), block.toAst())
   },
 
   number: (number) => {
