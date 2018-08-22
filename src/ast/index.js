@@ -1,7 +1,7 @@
 import { Number, Boolean, Type } from './values'
 import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
-import { AddOpExpression, MulOpExpression } from './expressions'
+import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 
 export const generateAst = {
   Program: (block) => {
@@ -20,12 +20,32 @@ export const generateAst = {
     return new VarExp(id.sourceString)
   },
 
-  Exp_add: (leftExpression, operator, rightExpression) => {
-    return new AddOpExpression(leftExpression.toAst(), operator.sourceString, rightExpression.toAst())
+  Exp_or: (leftExpression, _, rightExpression) => {
+    return new LogicExpression(leftExpression.toAst(), 'or', rightExpression.toAst())
   },
 
-  Exp1_mul: (leftExpression, operator, rightExpression) => {
-    return new MulOpExpression(leftExpression.toAst(), operator.sourceString, rightExpression.toAst())
+  Exp1_and: (leftExpression, _, rightExpression) => {
+    return new LogicExpression(leftExpression.toAst(), 'and', rightExpression.toAst())
+  },
+
+  Exp2_compare: (leftExpression, operator, rightExpression) => {
+    return new CompareExpression(leftExpression.toAst(), operator.toAst(), rightExpression.toAst())
+  },
+
+  Exp3_add: (leftExpression, operator, rightExpression) => {
+    return new AddOpExpression(leftExpression.toAst(), operator.toAst(), rightExpression.toAst())
+  },
+
+  Exp4_mul: (leftExpression, operator, rightExpression) => {
+    return new MulOpExpression(leftExpression.toAst(), operator.toAst(), rightExpression.toAst())
+  },
+
+  Exp5_unary: (expression, operator) => {
+    return new UnaryExpression(operator.toAst(), expression.toAst())
+  },
+
+  OtherExp_parens: (_left, expression, _right) => {
+    return expression.toAst()
   },
 
   Statement_decl: (_let, varExp, _sep, type) => {
@@ -46,6 +66,22 @@ export const generateAst = {
 
   boolean: (boolean) => {
     return new Boolean(boolean.sourceString)
-  }
+  },
+
+  addop: (op) => {
+    return op.sourceString
+  },
+
+  mulop: (op) => {
+    return op.sourceString
+  },
+
+  prefixop: (op) => {
+    return op.sourceString
+  },
+
+  compare: (op) => {
+    return op.sourceString
+  },
 }
 

@@ -6,11 +6,22 @@ Tank {
             | "let" VarExp "=" value -- declGuessType
             | VarExp "=" Exp -- Assign
 
-  Exp       = Exp addop Exp1 --add
-            | Exp1
-  Exp1      = Exp1 mulop OtherExp --mul
-            | OtherExp
-  OtherExp  = number | boolean | VarExp
+  Exp       =  Exp "or" Exp1 -- or
+            |  Exp1
+  Exp1      =  Exp1 "and" Exp2 -- and
+            |  Exp2
+  Exp2      =  Exp3 compare Exp3 -- compare
+            |  Exp3
+  Exp3      =  Exp3 addop Exp4 -- add
+            |  Exp4
+  Exp4      =  Exp4 mulop Exp5 -- mul
+            |  Exp5
+  Exp5      =  prefixop OtherExp -- unary
+            |  OtherExp
+  OtherExp  =  boolean
+            |  number
+            |  VarExp
+            |  "(" Exp ")" -- parens
 
   VarExp    = id
   Type      = "number" | "boolean" | "text"
@@ -20,6 +31,8 @@ Tank {
   number    = digit+
   boolean   = ("true" | "false")
   value     = (number | boolean | id)
+  compare   =  "<=" | "<" | "==" | "!=" | ">=" | ">"
   addop     =  "+" | "-"
   mulop     =  "*" | "/"
+  prefixop  =  "-" | "not"
 }

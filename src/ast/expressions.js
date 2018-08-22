@@ -19,6 +19,18 @@ class Expression extends Base {
   }
 }
 
+export class LogicExpression extends Expression {
+
+}
+
+export class CompareExpression extends Expression {
+
+}
+
+export class UnaryExpression extends Base {
+  
+}
+
 export class AddOpExpression extends Expression {
   compile(bytecode) {
     super.compile(bytecode)

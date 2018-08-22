@@ -19,10 +19,10 @@ describe('Logic', function () {
   }))
 
   it('true or true', compile('let trueOrFalse : boolean = false or true', function(vm, bytecode) {
-    expect(vm.frame.get(1)).to.deep.eq(1)
+    expect(vm.frame.get(1)).to.eq(1)
   }))
 
-  it('false or false', compile('let trueOrFalse : boolean = false or true', function(vm, bytecode) {
-    expect(vm.frame.get(1)).to.deep.eq(0)
+  it('false or false', compile('let trueOrFalse : boolean = false or false', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(0)
   }))
 })
