@@ -1,44 +1,49 @@
 Tank {
-  Program   = Block
-  Block     = (Statement)*
-  CurlBlock = "{" Block "}"
-  Statement = "let" VarExp ":" Type "=" Exp br -- declAssign
-            | "let" VarExp ":" Type br -- decl
-            | "let" VarExp "=" value br -- declGuessType
-            | VarExp "=" Exp br-- Assign
-            | "if" "(" Exp ")" CurlBlock "else" CurlBlock --ifElse
-            | "if" "(" Exp ")" CurlBlock --if
-            | "while" "(" Exp ")" CurlBlock -- While
-            | "repeat" "(" number ")" CurlBlock -- Repeat
+  Program     = GlobalBlock
+  GlobalBlock = (GlobalStatement)*
+  LocalBlock  = (LocalStatement)*
+  CurlBlock   = "{" LocalBlock "}"
 
-  Exp       =  Exp "or" Exp1 -- or
-            |  Exp1
-  Exp1      =  Exp1 "and" Exp2 -- and
-            |  Exp2
-  Exp2      =  Exp3 compare Exp3 -- compare
-            |  Exp3
-  Exp3      =  Exp3 addop Exp4 -- add
-            |  Exp4
-  Exp4      =  Exp4 mulop Exp5 -- mul
-            |  Exp5
-  Exp5      =  prefixop OtherExp -- unary
-            |  OtherExp
-  OtherExp  =  boolean
-            |  number
-            |  VarExp
-            |  "(" Exp ")" -- parens
+  LocalStatement   = "let" VarExp ":" Type "=" Exp br -- declAssign
+                   | "let" VarExp ":" Type br -- decl
+                   | "let" VarExp "=" value br -- declGuessType
+                   | VarExp "=" Exp br-- Assign
+                   | "if" "(" Exp ")" CurlBlock "else" CurlBlock --ifElse
+                   | "if" "(" Exp ")" CurlBlock --if
+                   | "while" "(" Exp ")" CurlBlock -- While
+                   | "repeat" "(" number ")" CurlBlock -- Repeat
+  GlobalStatement  = id Args CurlBlock -- DefVoidMethod
+                   | LocalStatement
 
-  VarExp    = id
-  Type      = "number" | "boolean" | "text"
+  Exp        =  Exp "or" Exp1 -- or
+             |  Exp1
+  Exp1       =  Exp1 "and" Exp2 -- and
+             |  Exp2
+  Exp2       =  Exp3 compare Exp3 -- compare
+             |  Exp3
+  Exp3       =  Exp3 addop Exp4 -- add
+             |  Exp4
+  Exp4       =  Exp4 mulop Exp5 -- mul
+             |  Exp5
+  Exp5       =  prefixop OtherExp -- unary
+             |  OtherExp
+  OtherExp   =  boolean
+             |  number
+             |  VarExp
+             |  "(" Exp ")" -- parens
 
-  id        = ~keyword letter*
-  keyword   = ("let" | "number" | "boolean" | "text" | "if" | "else")
-  number    = digit+
-  boolean   = ("true" | "false")
-  value     = (number | boolean | id)
-  compare   =  "<=" | "<" | "==" | "!=" | ">=" | ">"
-  addop     =  "+" | "-"
-  mulop     =  "*" | "/"
-  prefixop  =  "-" | "not"
-  br        = ";"
+  Args       = "(" (VarExp ":" Type ("," VarExp ":" Type)*)? ")"
+  VarExp     = id
+  Type       = "number" | "boolean" | "text"
+
+  id         = ~keyword letter*
+  keyword    = ("let" | "number" | "boolean" | "text" | "if" | "else")
+  number     = digit+
+  boolean    = ("true" | "false")
+  value      = (number | boolean | id)
+  compare    =  "<=" | "<" | "==" | "!=" | ">=" | ">"
+  addop      =  "+" | "-"
+  mulop      =  "*" | "/"
+  prefixop   =  "-" | "not"
+  br         = ";"
 }

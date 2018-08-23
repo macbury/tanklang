@@ -14,7 +14,20 @@ a = 2;
 
 c = a + b;
 
-print(c);
+repeat(5) {
+  print(c);
+}
+
+methodExample(a : number, b : number) {
+  let c : number = a + b;
+}
+
+otherMethodExample(a : number, b : number) : number {
+  return a + b;
+}
+
+let d : number = otherMethodExample(2, 3);
+
 ```
 
 # Reference
