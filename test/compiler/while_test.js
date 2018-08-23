@@ -27,4 +27,14 @@ describe('while', function () {
       { opcode: 'Halt' } // | 25
     ])
   }))
+
+
+  it('(false)', loadAndcompile('./test/factories/false_loop.tank', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(0)
+  }))
+
+  it('nested loops', loadAndcompile('./test/factories/nested_loop.tank', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(10)
+    expect(vm.frame.get(2)).to.eq(10)
+  }))
 })
