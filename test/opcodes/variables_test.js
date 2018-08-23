@@ -14,7 +14,7 @@ describe('VirtualMachine', function() {
       }))
 
       it('requires existing variable', withVM([Opcodes.Load, 11], function(vm) {
-        expect(() => vm.step()).to.throw(/Could not find variable in frame/)
+        expect(() => vm.step()).to.throw(/Could not find variable 11 in frame/)
       }))
 
       it('requires one operand', withVM([Opcodes.Load], function(vm) {

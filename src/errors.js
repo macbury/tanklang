@@ -1,8 +1,8 @@
 export class VmError extends Error {}
 
 export class UndefinedVariable extends VmError {
-  constructor() {
-    super('Could not find variable in frame')
+  constructor(varNumber) {
+    super(`Could not find variable ${varNumber} in frame`)
   }
 }
 

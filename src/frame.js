@@ -14,7 +14,7 @@ export class Frame {
     } else if (this.globalFrame != null) {
       return this.globalFrame.get(varNumber)
     }
-    throw new UndefinedVariable()
+    throw new UndefinedVariable(varNumber)
   }
 
   set(varNumber, value) {
