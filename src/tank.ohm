@@ -9,6 +9,7 @@ Tank {
             | "if" "(" Exp ")" CurlBlock "else" CurlBlock --ifElse
             | "if" "(" Exp ")" CurlBlock --if
             | "while" "(" Exp ")" CurlBlock -- While
+            | "repeat" "(" number ")" CurlBlock -- Repeat
 
   Exp       =  Exp "or" Exp1 -- or
             |  Exp1

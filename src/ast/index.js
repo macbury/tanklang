@@ -66,6 +66,15 @@ export const generateAst = {
     )
   },
 
+  Statement_declGuessType: (_let, varExp, _assigment, value, _br) => {
+    let ve = varExp.toAst()
+    let v = value.toAst()
+    return new Joiner(
+      new DeclareVariable(ve, v.type),
+      new AssignVariable(ve, value.toAst())
+    )
+  },
+
   Statement_Assign: (varExp, _assign, exp, _br) => {
     return new AssignVariable(varExp.toAst(), exp.toAst())
   },
