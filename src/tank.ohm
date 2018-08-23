@@ -6,6 +6,7 @@ Tank {
             | "let" VarExp ":" Type br -- decl
             | "let" VarExp "=" value br -- declGuessType
             | VarExp "=" Exp br-- Assign
+            | "if" "(" Exp ")" CurlBlock "else" CurlBlock --ifElse
             | "if" "(" Exp ")" CurlBlock --if
 
   Exp       =  Exp "or" Exp1 -- or

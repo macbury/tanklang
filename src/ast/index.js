@@ -2,7 +2,7 @@ import { Number, Boolean, Type } from './values'
 import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
-import { IfStatement } from './logic'
+import { IfStatement, IfElseStatement } from './logic'
 
 export const generateAst = {
   Program: (block) => {
@@ -71,6 +71,10 @@ export const generateAst = {
 
   Statement_if: (_if, _lparen, expression, _rparen, block) => {
     return new IfStatement(expression.toAst(), block.toAst())
+  },
+
+  Statement_ifElse: (_if, _lparen, expression, _rparen, ifBlock, _else, elseBlock) => {
+    return new IfElseStatement(expression.toAst(), ifBlock.toAst(), elseBlock.toAst())
   },
 
   number: (number) => {
