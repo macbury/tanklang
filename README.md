@@ -1,3 +1,5 @@
+[ ![Codeship Status for macbury/tanklang](https://app.codeship.com/projects/0129e650-873e-0136-d478-3e27c1ec70f0/status?branch=master)](https://app.codeship.com/projects/302613)
+
 ## Example program
 
 ```
