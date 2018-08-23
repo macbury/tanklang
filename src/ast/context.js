@@ -27,13 +27,13 @@ export default class Context {
   }
 
   variableMustNotBeAlreadyDeclared(name) {
-    if (this.symbolTable[name]) {
+    if (this.fetchVariable(name)) {
       throw `Variable ${name} already declared`
     }
   }
 
   variableMustBeDeclared(name) {
-    if (!this.symbolTable[name]) {
+    if (!this.fetchVariable(name)) {
       throw `Variable ${name} not defined`
     }
   }
@@ -44,12 +44,21 @@ export default class Context {
   }
 
   lookupVariable(name) {
-    const variable = this.symbolTable[name]
+    const variable = this.fetchVariable(name)
     if (variable) {
       return variable
     } else if (!this.parent) {
       throw `Variable ${name} not found`
     }
     return this.parent.lookupVariable(name)
+  }
+
+  fetchVariable(name) {
+    let variable = this.symbolTable[name]
+    if (this.parent != null && variable == null) {
+      return this.parent.fetchVariable(name)
+    } else {
+      return variable
+    }
   }
 }

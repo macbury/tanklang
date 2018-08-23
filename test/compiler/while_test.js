@@ -28,7 +28,6 @@ describe('while', function () {
     ])
   }))
 
-
   it('(false)', loadAndcompile('./test/factories/false_loop.tank', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(0)
   }))
