@@ -2,6 +2,8 @@ import { VirtualMachine } from '../src/virtual_machine'
 import Compiler from '../src/compiler'
 import { readFileSync } from 'fs'
 
+const cache = {}
+
 export function withVM(instructions, callback) {
   return function(done) {
     let vm = new VirtualMachine(instructions)
@@ -13,7 +15,7 @@ export function withVM(instructions, callback) {
 export function loadAndcompile(path, callback) {
   return function(done) {
     let compiler = new Compiler()
-    let bytecode = compiler.compile(readFileSync(path))
+    let bytecode = compiler.compile(cache[path] || readFileSync(path))
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
     
