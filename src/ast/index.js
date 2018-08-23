@@ -3,7 +3,7 @@ import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 import { IfStatement, IfElseStatement } from './logic'
-import { WhileStatement } from './loop'
+import { WhileStatement, RepeatStatement } from './loop'
 
 export const generateAst = {
   Program: (block) => {
@@ -89,6 +89,10 @@ export const generateAst = {
 
   Statement_While: (_while, _lparen, expression, _rparen, block) => {
     return new WhileStatement(expression.toAst(), block.toAst())
+  },
+
+  Statement_Repeat: (_repeat, _lparen, number, _rparen, block) => {
+    return new RepeatStatement(number.toAst(), block.toAst())
   },
 
   number: (number) => {

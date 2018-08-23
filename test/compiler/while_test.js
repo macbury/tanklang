@@ -34,6 +34,7 @@ describe('while', function () {
 
   it('nested loops', loadAndcompile('./test/factories/nested_loop.tank', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(10)
-    expect(vm.frame.get(2)).to.eq(10)
+    expect(vm.frame.get(2)).to.eq(100)
+    expect(vm.frame.get(3)).to.eq(10)
   }))
 })
