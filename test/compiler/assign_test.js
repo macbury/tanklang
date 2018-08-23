@@ -3,7 +3,7 @@ import Compiler from '../../src/compiler'
 import { readFileSync } from 'fs'
 import { compile, loadAndcompile } from '../helpers'
 
-describe.only('Assign', function () {
+describe('Assign', function () {
 
   it('a = false', compile('let eq = false;', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(0)
