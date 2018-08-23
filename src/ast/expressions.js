@@ -63,7 +63,13 @@ export class CompareExpression extends Expression {
       return
     }
 
-    if (this.operator == '<' || this.operator == '<=') {
+    if (this.operator == '<') {
+      bytecode.push('IsGte')
+      bytecode.push('Not')
+      return
+    }
+
+    if (this.operator == '<=') {
       bytecode.push('IsGt')
       bytecode.push('Not')
       return

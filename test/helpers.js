@@ -16,6 +16,7 @@ export function loadAndcompile(path, callback) {
     let bytecode = compiler.compile(readFileSync(path))
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
+    
     vm.run()
     callback(vm, bytecode.toArray())
     done()

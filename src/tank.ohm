@@ -8,6 +8,7 @@ Tank {
             | VarExp "=" Exp br-- Assign
             | "if" "(" Exp ")" CurlBlock "else" CurlBlock --ifElse
             | "if" "(" Exp ")" CurlBlock --if
+            | "while" "(" Exp ")" CurlBlock -- While
 
   Exp       =  Exp "or" Exp1 -- or
             |  Exp1

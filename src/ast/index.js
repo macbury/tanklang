@@ -3,6 +3,7 @@ import { DeclareVariable, AssignVariable, VarExp } from './variables'
 import { Program, Block, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 import { IfStatement, IfElseStatement } from './logic'
+import { WhileStatement } from './loop'
 
 export const generateAst = {
   Program: (block) => {
@@ -75,6 +76,10 @@ export const generateAst = {
 
   Statement_ifElse: (_if, _lparen, expression, _rparen, ifBlock, _else, elseBlock) => {
     return new IfElseStatement(expression.toAst(), ifBlock.toAst(), elseBlock.toAst())
+  },
+
+  Statement_While: (_while, _lparen, expression, _rparen, block) => {
+    return new WhileStatement(expression.toAst(), block.toAst())
   },
 
   number: (number) => {

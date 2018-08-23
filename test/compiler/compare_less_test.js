@@ -11,7 +11,7 @@ describe('<', function () {
 
       { opcode: 'Push', operands: [1] },
       { opcode: 'Push', operands: [2] },
-      { opcode: 'IsGt' }, // is greater
+      { opcode: 'IsGte' }, // is greater
       { opcode: 'Not' }, // is greater
 
       { opcode: 'Store', operands: [1] }, // store true
