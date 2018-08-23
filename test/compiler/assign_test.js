@@ -1,8 +1,35 @@
 import { expect } from 'chai'
 import Compiler from '../../src/compiler'
 import { readFileSync } from 'fs'
+import { compile, loadAndcompile } from '../helpers'
 
 describe('Assign', function () {
+
+  it('a = false', compile('let eq : boolean = false;', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.deep.eq(0)
+    
+    expect(bytecode).to.deep.eq([
+      { opcode: 'Push', operands: [0] },// initialize eq
+      { opcode: 'Store', operands: [1] }, 
+
+      { opcode: 'Push', operands: [0] },
+      { opcode: 'Store', operands: [1] }, // store false
+      { opcode: 'Halt' }
+    ])
+  }))
+
+  it('a = true', compile('let eq : boolean = true;', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.deep.eq(1)
+    
+    expect(bytecode).to.deep.eq([
+      { opcode: 'Push', operands: [0] },// initialize eq
+      { opcode: 'Store', operands: [1] }, 
+
+      { opcode: 'Push', operands: [1] },
+      { opcode: 'Store', operands: [1] }, // store false
+      { opcode: 'Halt' }
+    ])
+  }))
 
   describe('assign multiple variables', function() {
     it('generate bytecode', function () {

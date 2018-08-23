@@ -19,7 +19,11 @@ class Instruction {
   }
 
   get opcode() {
-    return Opcodes[this.opcodeName]
+    let op = Opcodes[this.opcodeName]
+    if (op == null) {
+      throw new Error(`Undefined opcode: ${this.opcodeName}`)
+    }
+    return op
   }
 
   get length() {
@@ -56,7 +60,7 @@ export default class Bytecode {
     let instruction = new Instruction(opcodeName, operands)
     this.program.push(instruction)
     this.address += instruction.length
-    return this
+    return instruction
   }
 
   get nextAddress() {
