@@ -12,9 +12,10 @@ Tank {
                    | "if" "(" Exp ")" CurlBlock --if
                    | "while" "(" Exp ")" CurlBlock -- While
                    | "repeat" "(" number ")" CurlBlock -- Repeat
+                   | id Args br -- RunMethod
 
-  GlobalStatement  = id Args CurlBlock -- DefVoidMethod
-                   | LocalStatement
+  GlobalStatement  = LocalStatement
+                   | id Params CurlBlock -- DefVoidMethod
 
   Exp        =  Exp "or" Exp1 -- or
              |  Exp1
@@ -33,7 +34,8 @@ Tank {
              |  VarExp
              |  "(" Exp ")" -- parens
 
-  Args       = "(" (VarExp ":" Type ("," VarExp ":" Type)*)? ")"
+  Params     = "(" (VarExp ":" Type ("," VarExp ":" Type)*)? ")"
+  Args       = "(" ListOf<Exp, ","> ")"
   VarExp     = id
   Type       = "number" | "boolean" | "text"
 
