@@ -15,11 +15,31 @@ describe('methods', function () {
       { opcode: 'Push', operands: [0] },// initialize b
       { opcode: 'Store', operands: [2] }, 
 
-      // jmp after method
-      // method body start
-      // push argA
-      // push argB
-      // call method
+      { opcode: 'Push', operands: [2000] }, // set b to 2000
+      { opcode: 'Store', operands: [2] }, 
+
+      { opcode: 'Push', operands: [0] },// initialize c
+      { opcode: 'Store', operands: [3] }, 
+
+      { opcode: 'Push', operands: [0] }, // set c to 0
+      { opcode: 'Store', operands: [3] }, 
+
+      { opcode: 'Jmp', operands: [38] }, // skip method block
+
+      { opcode: 'Store', operands: [5] }, // initialize argA
+      { opcode: 'Store', operands: [6] }, // initialize argB
+
+      { opcode: 'Load', operands: [5] }, // load argA
+      { opcode: 'Load', operands: [6] }, // load argB
+
+      { opcode: 'Add' }, // sum arguments
+
+      { opcode: 'Store', operands: [3] }, // store sum of args to c
+      { opcode: 'Ret' }, // return from simpleMerhod
+
+      { opcode: 'Load', operands: [1] }, //load a
+      { opcode: 'Load', operands: [2] }, //load b
+      { opcode: 'Call', operands: [26] }, //call method
       
       { opcode: 'Halt' }
     ])
