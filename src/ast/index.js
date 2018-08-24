@@ -4,7 +4,7 @@ import { Program, Block, LocalBlock, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 import { IfStatement, IfElseStatement } from './logic'
 import { WhileStatement, RepeatStatement } from './loop'
-import { DefGlobalMethod } from './methods'
+import { DefGlobalVoidMethod, Param } from './methods'
 
 export const generateAst = {
   Program: (block) => {
@@ -28,7 +28,7 @@ export const generateAst = {
   },
 
   VarExp: (id) => {
-    return new VarExp(id.sourceString)
+    return new VarExp(id.toAst())
   },
 
   Exp_or: (leftExpression, _, rightExpression) => {
@@ -60,7 +60,7 @@ export const generateAst = {
   },
 
   GlobalStatement_DefVoidMethod: (id, params, block) => {
-    return new DefGlobalMethod(id.sourceString, params.toAst(), block.toAst())
+    return new DefGlobalVoidMethod(id.toAst(), params.toAst(), block.toAst())
   },
 
   LocalStatement_decl: (_let, varAndType, _br) => {
@@ -115,6 +115,10 @@ export const generateAst = {
     return varAndTypes.toAst()
   },
 
+  Param: (id, _sep, type) => {
+    return new Param(id.toAst(), type.toAst())
+  },
+
   number: (number) => {
     return new Number(number.sourceString)
   },
@@ -128,6 +132,10 @@ export const generateAst = {
   },
 
   mulop: (op) => {
+    return op.sourceString
+  },
+
+  id: (op) => {
     return op.sourceString
   },
 

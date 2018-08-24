@@ -43,6 +43,7 @@ class TypeDef extends Base {
 const Type = {
   number: new TypeDef(0, Number),
   boolean: new TypeDef(0, Boolean),
+  method: new TypeDef(0, null),
 
   for: (name) => {
     if (Type[name] == null) {

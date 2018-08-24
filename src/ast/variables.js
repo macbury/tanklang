@@ -9,8 +9,8 @@ export class DeclareVariable extends Base {
   }
 
   analyze(context) {
-    context.variableMustNotBeAlreadyDeclared(this.varExp.name)
-    context.addVariable(this.varExp.name, this.type)
+    context.symbolMustNotBeAlreadyDeclared(this.varExp.name)
+    context.addSymbol(this.varExp.name, this.type)
     this.varExp.analyze(context)
   }
 
@@ -46,8 +46,8 @@ export class VarExp extends Base {
   }
 
   analyze(context) {
-    context.variableMustBeDeclared(this.name)
-    let { id, type } = context.lookupVariable(this.name)
+    context.symbolMustBeDeclared(this.name)
+    let { id, type } = context.lookupSymbol(this.name)
     this.id = id
     this.type = type
   }

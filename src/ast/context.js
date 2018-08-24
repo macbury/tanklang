@@ -1,4 +1,4 @@
-class Variable {
+class Symbol {
   constructor(name, type, id) {
     this.name = name
     this.type = type
@@ -26,39 +26,39 @@ export default class Context {
     return new Context(this)
   }
 
-  variableMustNotBeAlreadyDeclared(name) {
-    if (this.fetchVariable(name)) {
-      throw `Variable ${name} already declared`
+  symbolMustNotBeAlreadyDeclared(name) {
+    if (this.fetchSymbol(name)) {
+      throw new Error(`Symbol ${name} already declared`)
     }
   }
 
-  variableMustBeDeclared(name) {
-    if (!this.fetchVariable(name)) {
-      throw `Variable ${name} not defined`
+  symbolMustBeDeclared(name) {
+    if (!this.fetchSymbol(name)) {
+      throw new Error(`Symbol ${name} not defined`)
     }
   }
 
-  addVariable(name, type) {
-    this.symbolTable[name] = new Variable(name, type, this.nextUUID())
+  addSymbol(name, type) {
+    this.symbolTable[name] = new Symbol(name, type, this.nextUUID())
     return this.symbolTable[name]
   }
 
-  lookupVariable(name) {
-    const variable = this.fetchVariable(name)
-    if (variable) {
-      return variable
+  lookupSymbol(name) {
+    const symbol = this.fetchSymbol(name)
+    if (symbol) {
+      return symbol
     } else if (!this.parent) {
-      throw `Variable ${name} not found`
+      throw new Error(`Symbol ${name} not found`)
     }
-    return this.parent.lookupVariable(name)
+    return this.parent.lookupSymbol(name)
   }
 
-  fetchVariable(name) {
-    let variable = this.symbolTable[name]
-    if (this.parent != null && variable == null) {
-      return this.parent.fetchVariable(name)
+  fetchSymbol(name) {
+    let symbol = this.symbolTable[name]
+    if (this.parent != null && symbol == null) {
+      return this.parent.fetchSymbol(name)
     } else {
-      return variable
+      return symbol
     }
   }
 }

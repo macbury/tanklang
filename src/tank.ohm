@@ -33,8 +33,9 @@ Tank {
              |  number
              |  VarExp
              |  "(" Exp ")" -- parens
-
-  Params     = "(" ListOf<VarAndType, ","> ")"
+  
+  Param      = id ":" Type
+  Params     = "(" ListOf<Param, ","> ")"
   Args       = "(" ListOf<Exp, ","> ")"
   VarExp     = id
   VarAndType = VarExp ":" Type
