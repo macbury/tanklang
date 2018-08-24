@@ -2,8 +2,16 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('methods', function () {
+  it('recurrence', loadAndcompile('./test/factories/methods/recurrence.tank', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(11)
+  }))
+
+  it('multiple methods execution', loadAndcompile('./test/factories/methods/multi_exec.tank', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(6)
+  }))
+
   it('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
-    expect(vm.frame.get(3)).to.deep.eq(3000)
+    expect(vm.frame.get(3)).to.eq(3000)
 
     expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize a

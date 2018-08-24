@@ -41,7 +41,7 @@ Tank {
   VarAndType = VarExp ":" Type
   Type       = "number" | "boolean" | "text"
 
-  id         = ~keyword letter*
+  id         = ~keyword letter+
   keyword    = ("let" | "number" | "boolean" | "text" | "if" | "else")
   number     = digit+
   boolean    = ("true" | "false")
