@@ -1,6 +1,6 @@
 import { Number, Boolean, Type } from './values'
 import { DeclareVariable, AssignVariable, VarExp } from './variables'
-import { Program, Block, Joiner, Base } from './base'
+import { Program, Block, LocalBlock, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 import { IfStatement, IfElseStatement } from './logic'
 import { WhileStatement, RepeatStatement } from './loop'
@@ -10,8 +10,12 @@ export const generateAst = {
     return new Program(block.toAst())
   },
 
-  Block: (statements) => {
+  GlobalBlock: (statements) => {
     return new Block(statements.toAst())
+  },
+
+  LocalBlock: (statements) => {
+    return new LocalBlock(statements.toAst())
   },
 
   CurlBlock: (_lcurl, block, _rcurl) => {
@@ -54,11 +58,11 @@ export const generateAst = {
     return expression.toAst()
   },
 
-  Statement_decl: (_let, varExp, _sep, type, _br) => {
+  LocalStatement_decl: (_let, varExp, _sep, type, _br) => {
     return new DeclareVariable(varExp.toAst(), type.toAst())
   },
 
-  Statement_declAssign: (_let, varExp, _sep, type, _assigment, value, _br) => {
+  LocalStatement_declAssign: (_let, varExp, _sep, type, _assigment, value, _br) => {
     let ve = varExp.toAst()
     return new Joiner(
       new DeclareVariable(ve, type.toAst()),
@@ -66,7 +70,7 @@ export const generateAst = {
     )
   },
 
-  Statement_declGuessType: (_let, varExp, _assigment, value, _br) => {
+  LocalStatement_declGuessType: (_let, varExp, _assigment, value, _br) => {
     let ve = varExp.toAst()
     let v = value.toAst()
     return new Joiner(
@@ -75,23 +79,23 @@ export const generateAst = {
     )
   },
 
-  Statement_Assign: (varExp, _assign, exp, _br) => {
+  LocalStatement_Assign: (varExp, _assign, exp, _br) => {
     return new AssignVariable(varExp.toAst(), exp.toAst())
   },
 
-  Statement_if: (_if, _lparen, expression, _rparen, block) => {
+  LocalStatement_if: (_if, _lparen, expression, _rparen, block) => {
     return new IfStatement(expression.toAst(), block.toAst())
   },
 
-  Statement_ifElse: (_if, _lparen, expression, _rparen, ifBlock, _else, elseBlock) => {
+  LocalStatement_ifElse: (_if, _lparen, expression, _rparen, ifBlock, _else, elseBlock) => {
     return new IfElseStatement(expression.toAst(), ifBlock.toAst(), elseBlock.toAst())
   },
 
-  Statement_While: (_while, _lparen, expression, _rparen, block) => {
+  LocalStatement_While: (_while, _lparen, expression, _rparen, block) => {
     return new WhileStatement(expression.toAst(), block.toAst())
   },
 
-  Statement_Repeat: (_repeat, _lparen, number, _rparen, block) => {
+  LocalStatement_Repeat: (_repeat, _lparen, number, _rparen, block) => {
     return new RepeatStatement(number.toAst(), block.toAst())
   },
 

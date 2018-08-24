@@ -3,7 +3,6 @@ import { loadAndcompile } from '../helpers'
 
 describe('if else', function () {
   it('eval if block', loadAndcompile('./test/factories/positive_if_else.tank', function(vm, bytecode) {
-    expect(vm.frame.get(1)).to.deep.eq(2)
     expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize exp
       { opcode: 'Store', operands: [1] }, 
@@ -24,6 +23,7 @@ describe('if else', function () {
       
       { opcode: 'Halt' }
     ])
+    expect(vm.frame.get(1)).to.deep.eq(2)
   }))
 
   it('eval else block', loadAndcompile('./test/factories/negative_if_else.tank', function(vm, bytecode) {

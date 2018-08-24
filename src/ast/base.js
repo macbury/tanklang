@@ -32,12 +32,18 @@ export class Block extends Base {
   }
 
   analyze(context) {
-    let blockContext = context.createChildContext()
-    this.statements.forEach((statement) => statement.analyze(blockContext))
+    this.statements.forEach((statement) => statement.analyze(context))
   }
 
   compile(bytecode) {
     this.statements.forEach((statement) => statement.compile(bytecode))
+  }
+}
+
+export class LocalBlock extends Block {
+  analyze(context) {
+    let blockContext = context.createChildContext()
+    super.analyze(blockContext)
   }
 }
 
