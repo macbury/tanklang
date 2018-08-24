@@ -1,6 +1,9 @@
 let a : number = 1000;
 let b : number = 2000;
+let c : number = 0;
 
 simpleMethod(argA : number, argB : number) {
-  let c : number = argA + argB;
+  c = argA + argB;
 }
+
+simpleMethod(a, b);

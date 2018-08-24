@@ -2,7 +2,9 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('methods', function () {
-  it.only('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
+  it('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
+    expect(vm.frame.get(3)).to.deep.eq(3000)
+
     expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize a
       { opcode: 'Store', operands: [1] }, 
@@ -21,6 +23,5 @@ describe('methods', function () {
       
       { opcode: 'Halt' }
     ])
-    expect(vm.frame.get(1)).to.deep.eq(2)
   }))
 })

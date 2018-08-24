@@ -9,7 +9,7 @@ export class Frame {
   }
 
   get(varNumber) {
-    if (this.variables[varNumber] != null) {
+    if (!this.exists(varNumber)) {
       return this.variables[varNumber]
     } else if (this.globalFrame != null) {
       return this.globalFrame.get(varNumber)
@@ -17,8 +17,16 @@ export class Frame {
     throw new UndefinedVariable(varNumber)
   }
 
+  exists(varNumber) {
+    return this.variables[varNumber] != null
+  }
+
   set(varNumber, value) {
-    this.variables[varNumber] = value
+    if (!this.exists(varNumber) && (this.globalFrame != null && this.globalFrame.exists(varNumber))) {
+      this.globalFrame.set(varNumber, value)
+    } else {
+      this.variables[varNumber] = value
+    }
   }
 }
 

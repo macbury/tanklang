@@ -28,16 +28,36 @@ export class DefGlobalVoidMethod extends Base {
 
   analyze(context) {
     context.symbolMustNotBeAlreadyDeclared(this.methodName)
-    this.methodId = context.addSymbol(this.methodName, Type.method).id
+    this.methodSymbol = context.addSymbol(this.methodName, Type.method)
     this.params.forEach((param) => param.analyze(context))
     this.block.analyze(context)
   }
 
   compile(bytecode) {
     let labelMethodBody = bytecode.push('Jmp', 0)
+    this.methodSymbol.address = bytecode.address
     this.params.forEach((param) => param.compile(bytecode))
     this.block.compile(bytecode)
     bytecode.push('Ret')
     labelMethodBody.operands = [bytecode.address]
+  }
+}
+
+export class RunMethod extends Base {
+  constructor(methodName, args) {
+    super()
+    this.methodName = methodName
+    this.args = args
+  } 
+
+  analyze(context) {
+    context.symbolMustBeDeclared(this.methodName)
+    this.methodSymbol = context.lookupSymbol(this.methodName)
+    this.args.forEach((arg) => arg.analyze(context))
+  }
+
+  compile(bytecode) {
+    this.args.forEach((arg) => arg.compile(bytecode))
+    bytecode.push('Call', this.methodSymbol.address)
   }
 }
