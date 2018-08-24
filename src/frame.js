@@ -9,7 +9,7 @@ export class Frame {
   }
 
   get(varNumber) {
-    if (!this.exists(varNumber)) {
+    if (this.exists(varNumber)) {
       return this.variables[varNumber]
     } else if (this.globalFrame != null) {
       return this.globalFrame.get(varNumber)

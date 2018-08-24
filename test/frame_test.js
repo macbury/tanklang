@@ -40,8 +40,9 @@ describe('Frame', function () {
       expect(frames.current.get(1000)).to.eq(15)
     })
 
-    it.only('set value to global frame if local frame dont have reference', function () {
+    it('set value to global frame if local frame dont have reference', function () {
       let frames = new Frames()
+
       frames.current.set(1000, 0)
       frames.push(1)
       frames.current.set(1000, 15)
