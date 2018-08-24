@@ -4,7 +4,7 @@ import { Program, Block, LocalBlock, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 import { IfStatement, IfElseStatement } from './logic'
 import { WhileStatement, RepeatStatement } from './loop'
-import { DefGlobalVoidMethod, Param, RunMethod } from './methods'
+import { DefGlobalVoidMethod, Param, RunVoidMethod } from './methods'
 
 export const generateAst = {
   Program: (block) => {
@@ -63,8 +63,8 @@ export const generateAst = {
     return new DefGlobalVoidMethod(id.toAst(), params.toAst(), block.toAst())
   },
 
-  LocalStatement_RunMethod: (id, args, _br) => {
-    return new RunMethod(id.toAst(), args.toAst())
+  LocalStatement_RunVoidMethod: (id, args, _br) => {
+    return new RunVoidMethod(id.toAst(), args.toAst())
   },
 
   LocalStatement_decl: (_let, varAndType, _br) => {

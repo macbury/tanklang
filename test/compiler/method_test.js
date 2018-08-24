@@ -1,7 +1,11 @@
 import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
-describe('methods', function () {
+describe.only('methods', function () {
+  it('return', loadAndcompile('./test/factories/methods/return.tank', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(1000)
+  }))
+
   it('recurrence', loadAndcompile('./test/factories/methods/recurrence.tank', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(11)
   }))
@@ -36,7 +40,7 @@ describe('methods', function () {
       { opcode: 'Push', operands: [0] }, // set c to 0
       { opcode: 'Store', operands: [3] }, 
 
-      { opcode: 'Jmp', operands: [38] }, // skip method block
+      { opcode: 'Jmp', operands: [40] }, // skip method block
 
       { opcode: 'Store', operands: [5] }, // initialize argA
       { opcode: 'Store', operands: [6] }, // initialize argB
@@ -47,12 +51,14 @@ describe('methods', function () {
       { opcode: 'Add' }, // sum arguments
 
       { opcode: 'Store', operands: [3] }, // store sum of args to c
+      { opcode: 'Push', operands: [0] }, 
       { opcode: 'Ret' }, // return from simpleMerhod
 
       { opcode: 'Load', operands: [1] }, //load a
       { opcode: 'Load', operands: [2] }, //load b
       { opcode: 'Call', operands: [26] }, //call method
-      
+      { opcode: 'Pop' }, 
+
       { opcode: 'Halt' }
     ])
   }))

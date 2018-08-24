@@ -1,0 +1,5 @@
+test() : number {
+  return 1000;
+}
+
+let hello : number = test();

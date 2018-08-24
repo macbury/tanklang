@@ -38,6 +38,7 @@ export class DefGlobalVoidMethod extends Base {
     this.methodSymbol.address = bytecode.address
     this.params.forEach((param) => param.compile(bytecode))
     this.block.compile(bytecode)
+    bytecode.push('Push', 0)
     bytecode.push('Ret')
     labelMethodBody.operands = [bytecode.address]
   }
@@ -59,5 +60,12 @@ export class RunMethod extends Base {
   compile(bytecode) {
     this.args.forEach((arg) => arg.compile(bytecode))
     bytecode.push('Call', this.methodSymbol.address)
+  }
+}
+
+export class RunVoidMethod extends RunMethod {
+  compile(bytecode) {
+    super.compile(bytecode)
+    bytecode.push('Pop')
   }
 }
