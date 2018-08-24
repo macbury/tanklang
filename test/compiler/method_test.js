@@ -10,6 +10,10 @@ describe('methods', function () {
     expect(vm.frame.get(1)).to.eq(6)
   }))
 
+  it.only('chain methods', loadAndcompile('./test/factories/methods/multiple_method.tank', function(vm, bytecode) {
+    expect(vm.frame.get(1)).to.eq(1)
+  }))
+
   it('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
     expect(vm.frame.get(3)).to.eq(3000)
 
