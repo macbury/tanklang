@@ -30,6 +30,8 @@ let d : number = otherMethodExample(2, 3);
 
 ```
 
+return should just simply push value on stack
+
 # Reference
 
 https://github.com/harc/ohm/blob/master/doc/syntax-reference.md
