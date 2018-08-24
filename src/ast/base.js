@@ -42,8 +42,7 @@ export class Block extends Base {
 
 export class LocalBlock extends Block {
   analyze(context) {
-    let blockContext = context.createChildContext()
-    super.analyze(blockContext)
+    super.analyze(context.createChildContext())
   }
 }
 

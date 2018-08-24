@@ -12,6 +12,7 @@ Tank {
                    | "if" "(" Exp ")" CurlBlock --if
                    | "while" "(" Exp ")" CurlBlock -- While
                    | "repeat" "(" number ")" CurlBlock -- Repeat
+
   GlobalStatement  = id Args CurlBlock -- DefVoidMethod
                    | LocalStatement
 
