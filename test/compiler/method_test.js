@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('methods', function () {
-  it.only('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
+  it('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
     expect(vm.frame.get(3)).to.deep.eq(3000)
 
     expect(bytecode).to.deep.eq([
