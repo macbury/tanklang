@@ -9,7 +9,7 @@ class Variable {
 export default class Context {
   constructor(parent) {
     this.parent = parent
-    this.symbolTable = Object.create(null)
+    this.symbolTable = {}
     this.uuid = 0
   }
 

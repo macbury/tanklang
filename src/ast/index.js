@@ -4,6 +4,7 @@ import { Program, Block, LocalBlock, Joiner, Base } from './base'
 import { AddOpExpression, MulOpExpression, LogicExpression, CompareExpression, UnaryExpression } from './expressions'
 import { IfStatement, IfElseStatement } from './logic'
 import { WhileStatement, RepeatStatement } from './loop'
+import { DefGlobalMethod } from './methods'
 
 export const generateAst = {
   Program: (block) => {
@@ -58,14 +59,19 @@ export const generateAst = {
     return expression.toAst()
   },
 
-  LocalStatement_decl: (_let, varExp, _sep, type, _br) => {
-    return new DeclareVariable(varExp.toAst(), type.toAst())
+  GlobalStatement_DefVoidMethod: (id, params, block) => {
+    return new DefGlobalMethod(id.sourceString, params.toAst(), block.toAst())
   },
 
-  LocalStatement_declAssign: (_let, varExp, _sep, type, _assigment, value, _br) => {
-    let ve = varExp.toAst()
+  LocalStatement_decl: (_let, varAndType, _br) => {
+    let ve = varAndType.toAst()
+    return new DeclareVariable(ve, ve.type)
+  },
+
+  LocalStatement_declAssign: (_let, varAndType, _assigment, value, _br) => {
+    let ve = varAndType.toAst()
     return new Joiner(
-      new DeclareVariable(ve, type.toAst()),
+      new DeclareVariable(ve, ve.type),
       new AssignVariable(ve, value.toAst())
     )
   },
@@ -99,6 +105,16 @@ export const generateAst = {
     return new RepeatStatement(number.toAst(), block.toAst())
   },
 
+  VarAndType: (varExp, _sep, type) => {
+    let va = varExp.toAst()
+    va.type = type.toAst()
+    return va
+  },
+
+  Params: (_lparen, varAndTypes, _rparen) => {
+    return varAndTypes.toAst()
+  },
+
   number: (number) => {
     return new Number(number.sourceString)
   },
@@ -122,5 +138,11 @@ export const generateAst = {
   compare: (op) => {
     return op.sourceString
   },
+
+  EmptyListOf: () => [],
+
+  NonemptyListOf: function(el, _sep, els) {
+    return [el.toAst()].concat(els.toAst())
+  }
 }
 

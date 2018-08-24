@@ -4,8 +4,8 @@ Tank {
   LocalBlock  = (LocalStatement)*
   CurlBlock   = "{" LocalBlock "}"
 
-  LocalStatement   = "let" VarExp ":" Type "=" Exp br -- declAssign
-                   | "let" VarExp ":" Type br -- decl
+  LocalStatement   = "let" VarAndType "=" Exp br -- declAssign
+                   | "let" VarAndType br -- decl
                    | "let" VarExp "=" value br -- declGuessType
                    | VarExp "=" Exp br-- Assign
                    | "if" "(" Exp ")" CurlBlock "else" CurlBlock --ifElse
@@ -34,9 +34,10 @@ Tank {
              |  VarExp
              |  "(" Exp ")" -- parens
 
-  Params     = "(" (VarExp ":" Type ("," VarExp ":" Type)*)? ")"
+  Params     = "(" ListOf<VarAndType, ","> ")"
   Args       = "(" ListOf<Exp, ","> ")"
   VarExp     = id
+  VarAndType = VarExp ":" Type
   Type       = "number" | "boolean" | "text"
 
   id         = ~keyword letter*

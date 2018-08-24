@@ -4,5 +4,3 @@ let b : number = 2000;
 simpleMethod(argA : number, argB : number) {
   let c : number = argA + argB;
 }
-
-simpleMethod(a, b);
