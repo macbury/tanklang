@@ -1,6 +1,29 @@
 import { Base } from './base'
 import { Type } from './values'
 
+export class ReturnVoidStatement extends Base {
+  compile(bytecode) {
+    bytecode.push('Push', 0)
+    bytecode.push('Ret')
+  }
+}
+
+export class ReturnStatement extends Base {
+  constructor(expression) {
+    super()
+    this.expression = expression
+  }
+
+  analyze(context) {
+    this.expression.analyze(context)
+  }
+
+  compile(bytecode) {
+    this.expression.compile(bytecode)
+    bytecode.push('Ret')
+  }
+}
+
 export class Param extends Base {
   constructor(name, type) {
     super()
