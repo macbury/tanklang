@@ -53,7 +53,7 @@ export class VarExp extends Base {
   }
 
   validateType(value) {
-    if (this.type != value.type) {
+    if (this.type.isEq(value.type)) {
       throw new Error(`${this.name} is type of ${this.type} but you want assign ${value.type}`)
     }
   }

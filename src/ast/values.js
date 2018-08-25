@@ -38,6 +38,10 @@ class TypeDef extends Base {
   get defaultValue() {
     return this._defaultValue
   }
+
+  isEq(otherType) {
+    return (this != otherType)
+  }
 }
 
 const Type = {
