@@ -1,11 +1,7 @@
 import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
-describe.only('methods', function () {
-  it('return', loadAndcompile('./test/factories/methods/return.tank', function(vm, bytecode) {
-    expect(vm.frame.get(1)).to.eq(1000)
-  }))
-
+describe('methods', function () {
   it('recurrence', loadAndcompile('./test/factories/methods/recurrence.tank', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(11)
   }))

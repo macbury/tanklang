@@ -63,8 +63,7 @@ export class DefGlobalMethod extends Base {
     this.methodSymbol.address = bytecode.address
     this.params.forEach((param) => param.compile(bytecode))
     this.block.compile(bytecode)
-
-    bytecode.push('Push', this.returnType.defaultValue())
+    bytecode.push('Push', this.returnType.defaultValue)
     bytecode.push('Ret')
 
     labelMethodBody.operands = [bytecode.address]
