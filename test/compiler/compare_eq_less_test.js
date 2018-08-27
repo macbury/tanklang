@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { compile, loadAndcompile } from '../helpers'
 
-describe('<=', function () {
+describe.only('<=', function () {
   it('1 <= 2', compile('let gte : boolean = 1 <= 2;', function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     
