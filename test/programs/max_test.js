@@ -20,8 +20,8 @@ describe('VirtualMachine', function() {
     // Here is address 23
     Opcodes.Load, 0,        // "if" path: load a on the stack
     Opcodes.Ret
-  ], function(vm) {
-    vm.run()
+  ], async function(vm) {
+    await vm.run()
     expect(vm.stack.toArray()).to.deep.eq([6])
     expect(vm.ip).to.eq(7)
   }))

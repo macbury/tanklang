@@ -23,8 +23,8 @@ export default class OpcodesBuilder {
     return name
   }
 
-  execute(opcode, vm) {
+  async execute(opcode, vm) {
     let name = this.resolve(opcode)
-    this.expressions[name](vm)
+    await this.expressions[name](vm)
   }
 }

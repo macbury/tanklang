@@ -3,14 +3,14 @@ import { withVM } from '../helpers'
 import Opcodes from '../../src/opcodes'
 
 describe('VirtualMachine', function() {
-  it('can sum two numbers', withVM([Opcodes.Push, 1, Opcodes.Push, 2, Opcodes.Add, Opcodes.Halt], function(vm) {
-    vm.run()
+  it('can sum two numbers', withVM([Opcodes.Push, 1, Opcodes.Push, 2, Opcodes.Add, Opcodes.Halt], async function(vm) {
+    await vm.run()
     expect(vm.halted).to.be.true
     expect(vm.ip).to.eq(6)
   }))
 
-  it('it halts without halt', withVM([Opcodes.Push, 2, Opcodes.Push, 2], function(vm) {
-    vm.run()
+  it('it halts without halt', withVM([Opcodes.Push, 2, Opcodes.Push, 2], async function(vm) {
+    await vm.run()
     expect(vm.halted).to.be.true
     expect(vm.ip).to.eq(4)
     expect(vm.stack.toArray()).to.deep.eq([2, 2])
@@ -48,8 +48,8 @@ describe('VirtualMachine', function() {
     Opcodes.Jmp, 12,            // Go back to the start of the loop
 
     Opcodes.Halt
-  ], function(vm) {
-    vm.run()
+  ], async function(vm) {
+    await vm.run()
     expect(vm.halted).to.be.true
     expect(vm.ip).to.eq(37)
   }))

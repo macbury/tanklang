@@ -1,14 +1,17 @@
+import chai from 'chai'
 import { VirtualMachine } from '../src/virtual_machine'
 import Compiler from '../src/compiler'
 import { readFileSync } from 'fs'
+import chaiAsPromised from "chai-as-promised"
 
 const cache = {}
 
+chai.use(chaiAsPromised);
+
 export function withVM(instructions, callback) {
-  return function(done) {
+  return async function() {
     let vm = new VirtualMachine(instructions)
-    callback(vm)
-    done()
+    await callback(vm)
   }
 }
 

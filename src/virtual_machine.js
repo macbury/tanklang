@@ -40,8 +40,8 @@ export class VirtualMachine {
   /**
   * Run program execution until its halted
   */
-  run() {
-    while(this.step()) {}
+  async run() {
+    while(await this.step()) {}
   }
 
   canStep() {
@@ -51,11 +51,11 @@ export class VirtualMachine {
   /**
   * Step to next instruction
   */
-  step() {
+  async step() {
     assert(!this.halted, "VM is halted!")
 
     let nextOpcode = this.next("End of program")
-    this.opcodes.execute(nextOpcode, this)
+    await this.opcodes.execute(nextOpcode, this)
     if (this.canStep()) {
       return true
     } else {
