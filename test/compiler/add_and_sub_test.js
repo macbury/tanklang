@@ -23,12 +23,12 @@ describe('Add number and sub', function () {
     ])
   })
 
-  it('can run on vm', function() {
+  it('can run on vm', async function() {
     let compiler = new Compiler()
     let bytecode = compiler.compile(readFileSync('./test/factories/add_and_sub.tank'))
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
-    vm.run()
+    await vm.run()
 
     expect(vm.frame.get(1)).to.deep.eq(4)
   })

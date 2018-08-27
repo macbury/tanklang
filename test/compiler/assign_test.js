@@ -4,20 +4,19 @@ import { readFileSync } from 'fs'
 import { compile, loadAndcompile } from '../helpers'
 
 describe('Assign', function () {
-
-  it('a = false', compile('let eq = false;', function(vm, bytecode) {
+  it('a = false', compile('let eq = false;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(0)
   }))
 
-  it('a = true', compile('let eq = true;', function(vm, bytecode) {
+  it('a = true', compile('let eq = true;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
   }))
 
-  it('a = 1000', compile('let eq = 1000;', function(vm, bytecode) {
+  it('a = 1000', compile('let eq = 1000;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1000)
   }))
 
-  it('a : boolean = false', compile('let eq : boolean = false;', function(vm, bytecode) {
+  it('a : boolean = false', compile('let eq : boolean = false;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(0)
     
     expect(bytecode).to.deep.eq([
@@ -30,7 +29,7 @@ describe('Assign', function () {
     ])
   }))
 
-  it('a : boolean = true', compile('let eq : boolean = true;', function(vm, bytecode) {
+  it('a : boolean = true', compile('let eq : boolean = true;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     
     expect(bytecode).to.deep.eq([
@@ -44,7 +43,7 @@ describe('Assign', function () {
   }))
 
   describe('assign multiple variables', function() {
-    it('generate bytecode', function () {
+    it('generate bytecode', async function () {
       let compiler = new Compiler()
       let bytecode = compiler.compile(readFileSync('./test/factories/multiassign.tank'))
       expect(bytecode.toArray()).to.deep.eq([
@@ -64,7 +63,7 @@ describe('Assign', function () {
   })
 
   describe('let a : number = 3', function() {
-    it('generate bytecode', function () {
+    it('generate bytecode', async function () {
       let compiler = new Compiler()
       let bytecode = compiler.compile('let a : number = 3;')
       expect(bytecode.toArray()).to.deep.eq([

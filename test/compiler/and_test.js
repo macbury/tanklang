@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { compile } from '../helpers'
 
 describe('And', function () {
-  it('false and true', compile('let trueAndFalse : boolean = false and true;', function(vm, bytecode) {
+  it('false and true', compile('let trueAndFalse : boolean = false and true;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(0)
     
     expect(bytecode).to.deep.eq([
@@ -18,11 +18,11 @@ describe('And', function () {
     ])
   }))
 
-  it('true and true', compile('let trueAndFalse : boolean = true and true;', function(vm, bytecode) {
+  it('true and true', compile('let trueAndFalse : boolean = true and true;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(1)
   }))
 
-  it('false and false', compile('let trueAndFalse : boolean = false and false;', function(vm, bytecode) {
+  it('false and false', compile('let trueAndFalse : boolean = false and false;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(0)
   }))
 })
