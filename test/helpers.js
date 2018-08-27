@@ -16,15 +16,14 @@ export function withVM(instructions, callback) {
 }
 
 export function loadAndcompile(path, callback) {
-  return function(done) {
+  return async function() {
     let compiler = new Compiler()
     let bytecode = compiler.compile(cache[path] || readFileSync(path))
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
     
-    vm.run()
-    callback(vm, bytecode.toArray())
-    done()
+    await vm.run()
+    await callback(vm, bytecode.toArray())
   }
 }
 

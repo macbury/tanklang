@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('if', function () {
-  it('eval block if true', loadAndcompile('./test/factories/positive_if.tank', function(vm, bytecode) {
+  it('eval block if true', loadAndcompile('./test/factories/positive_if.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(0)
     expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize exp
@@ -22,7 +22,7 @@ describe('if', function () {
     ])
   }))
 
-  it('skip block if false', loadAndcompile('./test/factories/negative_if.tank', function(vm, bytecode) {
+  it('skip block if false', loadAndcompile('./test/factories/negative_if.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     
     expect(bytecode).to.deep.eq([
@@ -43,7 +43,7 @@ describe('if', function () {
     ])
   }))
 
-  it('skip block if false', loadAndcompile('./test/factories/adv_if.tank', function(vm, bytecode) {
+  it('skip block if false', loadAndcompile('./test/factories/adv_if.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     expect(vm.frame.get(2)).to.deep.eq(15)
   }))

@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('Checking precedences', function () {
-  it('operator precedence', loadAndcompile('./test/factories/precedence.tank', function(vm, bytecode) {
+  it('operator precedence', loadAndcompile('./test/factories/precedence.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(-2)
     
     expect(bytecode).to.deep.eq([

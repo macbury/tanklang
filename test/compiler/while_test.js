@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('while', function () {
-  it('a < 10', loadAndcompile('./test/factories/inc_loop.tank', function(vm, bytecode) {
+  it('a < 10', loadAndcompile('./test/factories/inc_loop.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(10)
     expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize a | 1
@@ -28,11 +28,11 @@ describe('while', function () {
     ])
   }))
 
-  it('(false)', loadAndcompile('./test/factories/false_loop.tank', function(vm, bytecode) {
+  it('(false)', loadAndcompile('./test/factories/false_loop.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(0)
   }))
 
-  it('nested loops', loadAndcompile('./test/factories/nested_loop.tank', function(vm, bytecode) {
+  it('nested loops', loadAndcompile('./test/factories/nested_loop.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(10)
     expect(vm.frame.get(2)).to.eq(100)
     expect(vm.frame.get(3)).to.eq(10)

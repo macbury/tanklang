@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { compile, loadAndcompile } from '../helpers'
 
 describe('-exp', function () {
-  it('a = -1', compile('let a : number = -1;', function(vm, bytecode) {
+  it('a = -1', compile('let a : number = -1;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(-1)
     
     expect(bytecode).to.deep.eq([

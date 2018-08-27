@@ -2,19 +2,19 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('methods', function () {
-  it('recurrence', loadAndcompile('./test/factories/methods/recurrence.tank', function(vm, bytecode) {
+  it('recurrence', loadAndcompile('./test/factories/methods/recurrence.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(11)
   }))
 
-  it('multiple methods execution', loadAndcompile('./test/factories/methods/multi_exec.tank', function(vm, bytecode) {
+  it('multiple methods execution', loadAndcompile('./test/factories/methods/multi_exec.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(6)
   }))
 
-  it('chain methods', loadAndcompile('./test/factories/methods/multiple_method.tank', function(vm, bytecode) {
+  it('chain methods', loadAndcompile('./test/factories/methods/multiple_method.tank', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.eq(1)
   }))
 
-  it('generating method', loadAndcompile('./test/factories/methods/simple.tank', function(vm, bytecode) {
+  it('generating method', loadAndcompile('./test/factories/methods/simple.tank', async function(vm, bytecode) {
     expect(vm.frame.get(3)).to.eq(3000)
 
     expect(bytecode).to.deep.eq([

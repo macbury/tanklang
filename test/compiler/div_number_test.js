@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { loadAndcompile } from '../helpers'
 
 describe('/', function () {
-  it('divide numbers', loadAndcompile('./test/factories/div_op.tank', function(vm, bytecode) {
+  it('divide numbers', loadAndcompile('./test/factories/div_op.tank', async function(vm, bytecode) {
     expect(bytecode).to.deep.eq([
       { opcode: 'Push', operands: [0] },// initialize mulResult
       { opcode: 'Store', operands: [1] }, 

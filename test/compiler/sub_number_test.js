@@ -4,7 +4,7 @@ import Compiler from '../../src/compiler'
 import { readFileSync } from 'fs'
 
 describe('-', function () {
-  it('generate byte code', function () {
+  it('generate byte code', async function () {
     let compiler = new Compiler()
     let bytecode = compiler.compile(readFileSync('./test/factories/sub_number.tank'))
     expect(bytecode.toArray()).to.deep.eq([
@@ -19,13 +19,13 @@ describe('-', function () {
     ])
   })
 
-  it('can run on vm', function() {
+  it('can run on vm', async function() {
     let compiler = new Compiler()
     let bytecode = compiler.compile(readFileSync('./test/factories/sub_number.tank'))
     let program = bytecode.toProgram()
     let vm = new VirtualMachine(program)
 
-    vm.run()
+    await vm.run()
 
     expect(vm.frame.get(1)).to.deep.eq(-2)
     expect(vm.stack.toArray()).to.be.empty

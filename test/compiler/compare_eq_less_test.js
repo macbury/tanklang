@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import { compile, loadAndcompile } from '../helpers'
 
-describe.only('<=', function () {
-  it('1 <= 2', compile('let gte : boolean = 1 <= 2;', function(vm, bytecode) {
+describe('<=', function () {
+  it('1 <= 2', compile('let gte : boolean = 1 <= 2;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.eq(1)
     
     expect(bytecode).to.deep.eq([
@@ -19,11 +19,11 @@ describe.only('<=', function () {
     ])
   }))
 
-  it('2 <= 1', compile('let gte : boolean = 2 <= 1;', function(vm, bytecode) {
+  it('2 <= 1', compile('let gte : boolean = 2 <= 1;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.gte(0)
   }))
 
-  it('1 <= 1', compile('let gte : boolean = 1 <= 1;', function(vm, bytecode) {
+  it('1 <= 1', compile('let gte : boolean = 1 <= 1;', async function(vm, bytecode) {
     expect(vm.frame.get(1)).to.deep.gte(1)
   }))
 })
