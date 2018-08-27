@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { withVM } from '../helpers'
 import Opcodes from '../../src/opcodes'
 
-describe.only('VirtualMachine', function() {
+describe('VirtualMachine', function() {
   describe('logic', function() {
     describe('Not', function() {
       it('unary is not true', withVM([Opcodes.Not], async function(vm) {
