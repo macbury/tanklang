@@ -1,0 +1,14 @@
+TankAssembly {
+  Instructions  = (Line*)
+  LabelAddress  = label ":" br
+  Line      = keyword Values br -- operation
+          | LabelAddress
+  Values        = ListOf<value, ",">
+  
+  br         = "\n"*
+  keyword          = ("Halt" | "Push" | "Pop" | "Dup" | "Add" | "Sub" | "Mul" | "Div" | "Not" | "And" | "Or" | "IsEq" | "IsGt" | "IsGte" | "Load" | "Store" | "Jmp" | "Jif" | "Call" | "Ret")
+  label            = "." letter+
+  number           = digit+
+  boolean          = ("true" | "false")
+  value            = (label | number | boolean)
+}
